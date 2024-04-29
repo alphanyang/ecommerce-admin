@@ -1,14 +1,24 @@
 "use client";
 
-import { Modal } from "@/components/ui/modal";
+import { useEffect } from "react";
+
+import { useStoreModal } from "@/hooks/user-dash-store-modal";
 
 const SetupPage = () => {
-    return (
-        <div className="p-4">
-            <Modal title="Test" description="Test Desc" isOpen onClose={() => {}}>
-              Children
-            </Modal>
-        </div>
+  //review global store in modal components admin
+  const onOpen = useStoreModal((state) => state.onOpen);
+  const isOpen = useStoreModal((state) => state.isOpen);
+
+  useEffect(() => {
+    if(!isOpen) {
+      onOpen();
+    }
+  }, [isOpen, onOpen]); //dependency array
+  
+  return (
+      <div className="p-4">
+          Root Page
+      </div>
     );
   }
 
