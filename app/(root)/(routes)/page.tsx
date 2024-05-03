@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import { useStoreModal } from "@/hooks/user-dash-store-modal";
 
+
 const SetupPage = () => {
   //review global store in modal components admin
   const onOpen = useStoreModal((state) => state.onOpen);
@@ -15,11 +16,7 @@ const SetupPage = () => {
     }
   }, [isOpen, onOpen]); //dependency array
   
-  return (
-      <div className="p-4">
-          Root Page
-      </div>
-    );
+  return null;
   }
 
 export default SetupPage;
