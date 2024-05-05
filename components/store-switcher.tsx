@@ -79,7 +79,7 @@ export default function StoreSwitcher({
                                     key={store.value}
                                     onSelect={() => onStoreSelect(store)}
                                     className={cn(
-                                        "text-sm cursor-default select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50]",)}
+                                        "text-sm",)}
                                 >  
                                     <StoreIcon className="mr-2 h-5 w-5"/>
                                     {store.label}
@@ -101,7 +101,7 @@ export default function StoreSwitcher({
                                     storeModal.onOpen();
                                 }}
                                 className={cn(
-                                    "text-sm cursor-default select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50",)}
+                                    "text-sm0",)}
                             >
                                 <PlusCircle className="mr-2 h-4 w-4"/>
                                 Create Store
