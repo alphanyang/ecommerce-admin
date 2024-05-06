@@ -103,7 +103,7 @@ export default function StoreSwitcher({
                                 className={cn(
                                     "text-sm0",)}
                             >
-                                <PlusCircle className="mr-2 h-4 w-4"/>
+                                <PlusCircle className="mr-2 h-5 w-5"/>
                                 Create Store
                             </CommandItem>
                         </CommandGroup>
