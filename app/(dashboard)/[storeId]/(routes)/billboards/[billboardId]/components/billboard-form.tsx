@@ -127,12 +127,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                     </Button>
                 </form>
             </Form>
-            <Separator />
-            <ApiAlert 
-                title="NEXT_PUBLIC_API_URL "
-                description={`${origin}/api/${params.storeId}`} 
-                variant="public" 
-            />
         </>
     );
 }
