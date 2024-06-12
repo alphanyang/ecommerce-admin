@@ -16,8 +16,6 @@ import { Separator } from "@/components/ui/separator"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { ApiAlert } from "@/components/ui/api-alert";
-import { useOrigin } from "@/hooks/use-origin";
 import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
@@ -36,7 +34,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
 }) => {
     const params = useParams();
     const router = useRouter();
-    const origin = useOrigin();
 
     const [open, setOpen] = useState(false);
     const[loading, setLoading] = useState(false);
@@ -57,9 +54,13 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     const onSubmit = async (data: BillboardFormValues) => {
         try {
             setLoading(true);
-            await axios.patch(`/api/stores/${params.storeId}`, data);
+            if (initialData) {
+                await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data);
+            } else {
+                await axios.post(`/api/${params.storeId}/billboards`, data);
+            }
             router.refresh(); //refresh the page after the patch request
-            toast.success("Settings updated successfully");
+            toast.success(toastMessage);
         } catch (error) {
             toast.error("Something went wrong. Please try again");
         } finally {
@@ -70,11 +71,12 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
-            await axios.delete(`/api/stores/${params.storeId}`);
-            router.push("/"); //redirect to the home page after the delete request
-            toast.success("Store deleted successfully");
+            await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
+            router.refresh();
+            router.push(`/${params.storeId}/billboards`);//redirect to the home page after the delete request
+            toast.success("Billboards deleted successfully");
         } catch (error) {
-            toast.error("Make sure you remove all products and categories before deleting the store");
+            toast.error("Make sure you remove all products and categories before deleting the billboard");
         } finally {
             setLoading(false)
             setOpen(false)
