@@ -30,21 +30,21 @@ export const CellAction: React.FC<CellActionProps> = ({
 
     const onCopy = (id: string) => {
         navigator.clipboard.writeText(id);
-        toast.success("Billboard Id copied to clipboard");
+        toast.success("Category Id copied to clipboard");
     };
 
     const onUpdate = (id: string) => {
-        router.push(`/${params.storeId}/billboards/${id}`)
+        router.push(`/${params.storeId}/categories/${id}`)
     }
 
     const onDelete = async () => {
         try {
             setLoading(true);
-            await axios.delete(`/api/${params.storeId}/billboards/${data.id}`);
+            await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
             router.refresh();
-            toast.success("Billboards deleted successfully");
+            toast.success("Category deleted successfully");
         } catch (error) {
-            toast.error("Make sure you remove all products and categories before deleting the billboard");
+            toast.error("Make sure you remove all products and categories before deleting the category");
         } finally {
             setLoading(false)
             setOpen(false)

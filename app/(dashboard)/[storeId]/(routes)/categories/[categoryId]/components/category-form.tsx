@@ -57,9 +57,9 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
         try {
             setLoading(true);
             if (initialData) {
-                await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data);
+                await axios.patch(`/api/${params.storeId}/categories/${params.categoryId}`, data);
             } else {
-                await axios.post(`/api/${params.storeId}/billboards`, data);
+                await axios.post(`/api/${params.storeId}/categories`, data);
             }
             router.refresh(); //refresh the page after the patch request
             toast.success(toastMessage);
@@ -73,10 +73,10 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
-            await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
+            await axios.delete(`/api/${params.storeId}/categories/${params.categoryId}`);
             router.refresh();
-            router.push(`/${params.storeId}/billboards`);//redirect to the home page after the delete request
-            toast.success("Billboards deleted successfully");
+            router.push(`/${params.storeId}/categories`);//redirect to the home page after the delete request
+            toast.success("Categories deleted successfully");
         } catch (error) {
             toast.error("Make sure you remove all products and categories before deleting the billboard");
         } finally {
