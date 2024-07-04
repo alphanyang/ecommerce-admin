@@ -20,7 +20,14 @@ import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
     name: z.string().min(1),
-    imageUrl: z.string().min(1),
+    images: z.object({ url: z.string() }).array(),
+    price: z.coerce.number().min(1),
+    categoryId: z.string().min(1),
+    colorId: z.string().min(1),
+    sizeId: z.string().min(1),
+    isFeatured: z.boolean().default(false).optional(),
+    isArchived: z.boolean().default(false).optional(),
+
 });
 
 type ProductFormValues = z.infer<typeof formSchema>;
@@ -45,9 +52,18 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
     const form = useForm<ProductFormValues>({
         resolver: zodResolver(formSchema),
-        defaultValues: initialData || {
+        defaultValues: initialData ? {
+            ...initialData,
+            price: parseFloat(String(initialData?.price)),
+        } : {
             name: "",
-            imageUrl: ""
+            images: [],
+            price: 0,
+            categoryId: '',
+            colorId: '',
+            sizeId: '',
+            isFeatured: false,
+            isArchived: false,
         }
     });
 
@@ -112,16 +128,16 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
                     <FormField 
                         control={form.control}
-                        name="imageUrl"
+                        name="images"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Background Image</FormLabel>
+                                <FormLabel>Images</FormLabel>
                                 <FormControl>
                                     <ImageUpload 
-                                        value={field.value ? [field.value] : []}
+                                        value={field.value.map((image) => image.url)}
                                         disabled={loading}
-                                        onChange={(url) => field.onChange(url)}
-                                        onRemove={() => field.onChange("")}
+                                        onChange={(url) => field.onChange([...field.value, { url }])}
+                                        onRemove={(url) => field.onChange([...field.value.filter((current) => current.url !== url)])}
                                     />
                                 </FormControl>
                                 <FormMessage />
