@@ -68,3 +68,20 @@ export async function DELETE (
         console.log('STORE_DELETE', error);
     }
 }
+
+export async function GET (
+    _req: Request,
+    { params }: { params: { storeId: string } }
+) {
+    try {
+        const stores = await prismadb.store.findUnique({
+            where: {
+                id: params.storeId,
+            }
+        });
+
+        return NextResponse.json(stores, { status: 200 });
+    } catch (error) {
+        console.log('STORE_GET', error);
+    }
+}
